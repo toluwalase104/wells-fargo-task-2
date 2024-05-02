@@ -1,7 +1,8 @@
 package com.wellsfargo.counselor.entity;
 
-
+import java.util.List;
 import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -28,16 +29,17 @@ public class Advisor {
     @Column(nullable = false)
     private String email;
 
-    protected Advisor() {
+    // Added the below variable to represent the clientelle assigned to a financial advisor
+    @OneToMany(mappedBy = "financialAdvisor")
+    private List<Client> clientList;
 
-    }
-
-    public Advisor(String firstName, String lastName, String address, String phone, String email) {
+    public Advisor(String firstName, String lastName, String address, String phone, String email, List<Client> clientList) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.clientList = clientList;
     }
 
     public Long getAdvisorId() {
@@ -82,5 +84,13 @@ public class Advisor {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Client> getClientList() {
+        return clientList;
+    }
+
+    public void setClientList(List<Client> clientList) {
+        this.clientList = clientList;
     }
 }
